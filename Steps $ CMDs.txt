@@ -1,0 +1,57 @@
+Get a domain registered.
+wasnt able to get free domain so had to purchase one online. https://tld-list.com/
+with all domain info at hand next we create our hosted zone by going to route 53 to hosted zone and click hosted zone.
+input the domain name, and create public hosted zone.
+connect route 53 to domain server
+copy route 53 info to domain namen server and change name servers.
+splung a load balancer server ubuntu 20.04
+create a record and use public if from the load balancer and create a record from route 53 to point to the load balancer.
+craete another record for www and still reference to the load balancer ip to connect the 3 together.
+connect the load balancer server.
+update the server and install the nginx.
+sudo apt update
+sudo apt install nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
+make sure its active and running.
+create configuration for the reverse process setting.
+Configure Nginx LB using Web Servers’ names defined in /etc/hosts
+sudo vi /etc/nginx/nginx.conf
+copy contents and replace domain name with the server name save and exit.
+remove default site so the reverse proxy will be redirecting the newly config file
+sudo rm -f /etc/nginx/site-enable/default
+check make sure sucessfully configured.
+sudo nginx -t
+enable nginx
+cd /etc/nginx/site-enabled/
+link load balancer config file to the enabled site.
+sudo ln -s ../sit-available/load_balancer.config .
+check by using (ll) to show arrow link.
+now reload nginx
+sudo sytemctl relaod nginx
+check website to make sure it tredirects to the webserver.
+take screenshot and update.
+now presently as seen on top left of website its not secured. so no nest we have to work on making it secured.
+install certbot.
+sudo apt install certbot -y
+install module/dependency the certbot will need.
+sudo apt install python3-certbot-nginx -y
+sudo nginx -t
+sudo nginx -s relaod
+make sure test is sucessfully.
+now create a domain certificate to secure the domain.
+sudo certbot --nginx -d  toolingysf.ga d www.toolingysf.ga
+enter email address
+A to agree
+y for yes
+certificate creating and finally created. says ok
+choose 2 to redirect all incoming traffic from port 80 to port 443
+check website to make sure security is in place.
+create crontab assignment so certificatewill be immidiately created upon expiration.
+crontab -email
+choose appropriate vi
+chose month and day of the week
+copy and paste
+save and exite
+since sats wasnt used linking not necessary.
+check website. screenshot and update.
